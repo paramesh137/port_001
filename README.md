@@ -31,3 +31,4 @@ npm run build    # production build → dist/index.html (single file, deploy any
 3. **Project links** — add a `link` to any project and a "View project ↗" button appears on its card.
 4. **Colors** — change the `--color-*` tokens in `src/index.css` (`@theme` block). 3D scene colors are constants at the top of `Scene.tsx`.
 5. **Intro card** — duration is the `setTimeout(..., 1700)` in `App.tsx`; click anywhere to skip it.
+"# port_001" 
