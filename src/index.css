@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bangers", "Impact", "Arial Black", sans-serif;
+  --font-body: "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --font-jp: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --color-ink: #0a0618;
+  --color-neon: #ff2d95;
+  --color-sakura: #ffb7c5;
+  --color-aqua: #22d3ee;
+  --color-gold: #ffd166;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #0a0618;
+}
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- manga panel card ---------- */
+.panel {
+  position: relative;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: rgba(16, 9, 38, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 0 100%);
+  transition: transform 0.2s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--glow, #ff2d95) 26%, transparent), transparent 60%);
+}
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1.4px);
+  background-size: 7px 7px;
+  -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 55%);
+  mask-image: linear-gradient(135deg, #000 0%, transparent 55%);
+}
+.panel:hover {
+  border-color: color-mix(in srgb, var(--glow, #ff2d95) 65%, transparent);
+  box-shadow: inset 0 0 50px color-mix(in srgb, var(--glow, #ff2d95) 14%, transparent);
+}
+.panel:hover::before {
+  opacity: 1;
+}
+.panel .corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background: var(--glow, #ff2d95);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+/* ---------- buttons (skewed anime UI) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 2rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: skewX(-12deg);
+  transition: transform 0.2s ease, filter 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.btn > span {
+  display: inline-block;
+  transform: skewX(12deg);
+}
+.btn:hover {
+  transform: skewX(-12deg) translateY(-2px);
+  filter: brightness(1.12);
+}
+.btn-primary {
+  background: linear-gradient(90deg, #ff2d95, #ff7ac3);
+  color: #0a0618;
+  box-shadow: 0 0 28px rgba(255, 45, 149, 0.45);
+}
+.btn-ghost {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+}
+.btn-ghost:hover {
+  border-color: #22d3ee;
+  color: #22d3ee;
+}
+
+/* ---------- reveal + hero entrance ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px) skewY(1.5deg);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+.hero-in {
+  opacity: 0;
+  animation: heroIn 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-play-state: paused;
+}
+.ready .hero-in {
+  animation-play-state: running;
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateX(-30px) skewX(-6deg); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* ---------- text effects ---------- */
+.glitch {
+  display: inline-block;
+  text-shadow: 3px 0 #22d3ee, -3px 0 #ff2d95;
+  animation: glitch 4s infinite;
+}
+@keyframes glitch {
+  0%, 88%, 100% { text-shadow: 3px 0 #22d3ee, -3px 0 #ff2d95; transform: none; }
+  90% { text-shadow: -5px 0 #22d3ee, 5px 0 #ff2d95; transform: translate(3px, -2px) skewX(-6deg); }
+  92% { text-shadow: 5px 0 #22d3ee, -5px 0 #ff2d95; transform: translate(-3px, 2px); }
+  94% { text-shadow: -2px 0 #22d3ee, 2px 0 #ff2d95; transform: translate(1px, 0) skewX(4deg); }
+  96% { text-shadow: 3px 0 #22d3ee, -3px 0 #ff2d95; transform: none; }
+}
+.neon-text {
+  text-shadow: 0 0 10px rgba(255, 45, 149, 0.8), 0 0 30px rgba(255, 45, 149, 0.4);
+}
+.vertical-jp {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/* ---------- overlays ---------- */
+.speedlines {
+  background: repeating-conic-gradient(from 0deg at 72% 45%, rgba(255, 255, 255, 0.05) 0deg 0.8deg, transparent 0.8deg 4.5deg);
+  -webkit-mask-image: radial-gradient(circle at 72% 45%, transparent 12%, #000 40%, transparent 72%);
+  mask-image: radial-gradient(circle at 72% 45%, transparent 12%, #000 40%, transparent 72%);
+}
+.scanlines {
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
+}
+
+/* ---------- marquee ticker ---------- */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- loaders / bars ---------- */
+.loader-bar {
+  width: 0;
+  animation: load 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes load {
+  to { width: 100%; }
+}
+.stat-bar {
+  width: 0;
+}
+.revealed .stat-bar {
+  animation: grow 1.2s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes grow {
+  to { width: var(--w); }
+}
+
+/* ---------- orbit rings around the skill orb ---------- */
+.orbit-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 9999px;
+  border: 1px dashed rgba(255, 45, 149, 0.45);
+  pointer-events: none;
+}
+.orbit-ring.a {
+  width: 430px;
+  height: 430px;
+  margin: -215px 0 0 -215px;
+  animation: ringA 14s linear infinite;
+}
+.orbit-ring.b {
+  width: 370px;
+  height: 370px;
+  margin: -185px 0 0 -185px;
+  border-color: rgba(34, 211, 238, 0.4);
+  animation: ringB 18s linear infinite reverse;
+}
+@keyframes ringA {
+  from { transform: rotateX(72deg) rotateZ(0deg); }
+  to { transform: rotateX(72deg) rotateZ(360deg); }
+}
+@keyframes ringB {
+  from { transform: rotateX(-65deg) rotateY(20deg) rotateZ(0deg); }
+  to { transform: rotateX(-65deg) rotateY(20deg) rotateZ(360deg); }
+}
+
+/* ---------- CSS 3D cube in project cards ---------- */
+.cube {
+  --s: 62px;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  transform-style: preserve-3d;
+  animation: spin 10s linear infinite;
+}
+.panel:hover .cube {
+  animation-duration: 3s;
+}
+.face {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--c);
+  background: color-mix(in srgb, var(--c) 18%, transparent);
+  box-shadow: 0 0 25px color-mix(in srgb, var(--c) 40%, transparent) inset;
+}
+.front { transform: translateZ(calc(var(--s) / 2)); }
+.back { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+.right { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); }
+.left { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
+.top { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
+.bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
+@keyframes spin {
+  from { transform: rotateX(-20deg) rotateY(0deg); }
+  to { transform: rotateX(-20deg) rotateY(360deg); }
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0618; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#ff2d95, #22d3ee); border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch, .marquee, .cube, .orbit-ring { animation: none !important; }
+}
